@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    public function sendMessage(Request $request)
+    public function sendMessage(Request $request,)
     {
         $request->validate([
             'receiver_id' => 'required',
@@ -34,16 +34,29 @@ class ChatController extends Controller
         return response()->json(['message' => $message], 201);
     }
 
-    public function getMessages(Request $request)
+    public function getMessages(Request $request,)
 {
     $receiverId = $request->input('receiver_id');
     $senderPhoneNumber = Auth::user()->phone;
 
     $messages = Message::where(function ($query) use ($receiverId,$senderPhoneNumber) {
+
         $query->where('receiver_id', $receiverId);
-    
+        // $query->where(['read_at' => null])->update(['read_at' => now()]);
+
     })->orderBy('created_at', 'asc')->get();
+
+
+        $messages2 = Message::where(function ($query) use ($receiverId, $senderPhoneNumber) {
+
+            $query->where(['read_at' => null])->update(['read_at' => now()]);
+
+        })->orderBy('created_at', 'asc')->get();
+
+
+
        // $messages = Message::where('receiver_id',$receiverId)->get();
     return response()->json(['messages' => $messages], 200);
 }
+
 }
