@@ -59,4 +59,37 @@ class ChatController extends Controller
     return response()->json(['messages' => $messages], 200);
 }
 
+public function notRead(Request $request){
+
+
+        $receiverId = $request->input('receiver_id');
+        $senderPhoneNumber = Auth::user()->phone;
+
+        $messages = Message::where(function ($query) use ($receiverId, $senderPhoneNumber) {
+
+            $query->where('receiver_id', $receiverId)
+            ->where(['read_at' => null]);
+
+        })->orderBy('created_at', 'asc')->get();
+        return response()->json(['messages' => $messages], 200);
+
+}
+
+public function readed(Request $request){
+
+
+        $receiverId = $request->input('receiver_id');
+        $senderPhoneNumber = Auth::user()->phone;
+
+        $messages = Message::where(function ($query) use ($receiverId, $senderPhoneNumber) {
+
+            $query->where('receiver_id', $receiverId)
+            ->whereNotNull('read_at');
+
+
+        })->orderBy('created_at', 'asc')->get();
+        return response()->json(['messages' => $messages], 200);
+
+}
+
 }

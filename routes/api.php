@@ -36,6 +36,10 @@ Route::middleware(['jwt.verify'])->group(function(){
 
     Route::post('/send-message', [ChatController::class, 'sendMessage']);
     Route::get('/get-messages', [ChatController::class, 'getMessages']);
+    Route::get('/notRead-messages', [ChatController::class, 'notRead']);
+
+Route::get('/readed-messages', [ChatController::class, 'readed']);
+
 
 });
 
