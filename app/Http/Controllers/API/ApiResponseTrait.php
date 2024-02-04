@@ -15,3 +15,8 @@ trait ApiResponseTrait
         return response($array);
     }
 }
+[
+    ''=>'',
+    ''=>'',
+]
+
