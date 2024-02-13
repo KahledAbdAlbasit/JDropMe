@@ -90,7 +90,7 @@ class ChatController extends Controller
         $receiverId = $request->input('receiver_id');
         $senderPhoneNumber = Auth::user()->phone;
 
-    // check if number exist or not
+        // check if number exist or not
         $isUserExistInDB = User::where('phone', $receiverId)->first();
         if(!isset($isUserExistInDB)) {
             return response()->json(
@@ -153,5 +153,7 @@ class ChatController extends Controller
         return response()->json(['messages' => $message], 200);
 
     }
-
+public function verification(){
+    
+}
 }

@@ -21,25 +21,29 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+
 Route::group([
     'middleware' => 'api',
     //'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout',[AuthController::class, 'logout']);
+    Route::post('/verification', [AuthController::class, 'verification']);
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+
+
 });
 
-Route::middleware(['jwt.verify'])->group(function(){
+Route::middleware(['jwt.verify'])->group(function () {
 
     Route::post('/send-message', [ChatController::class, 'sendMessage']);
     Route::get('/get-messages', [ChatController::class, 'getMessages']);
     Route::get('/notRead-messages', [ChatController::class, 'notRead']);
+    Route::get('/readed-messages', [ChatController::class, 'readed']);
 
-Route::get('/readed-messages', [ChatController::class, 'readed']);
+
 
 
 });
-
